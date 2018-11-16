@@ -1,5 +1,6 @@
 package com.huayun.article.controller;
 
+import com.huayun.article.domain.Article;
 import com.huayun.article.service.ArticleService;
 import com.huayun.common.AbstractController;
 import com.huayun.common.ResultObject;
@@ -15,7 +16,6 @@ public class ArticleController extends AbstractController{
 
     @Autowired
     public ArticleService articleService;
-
 
     @ResponseBody
     @RequestMapping(value = "/queryBeforeNewsList", method = RequestMethod.GET)
@@ -37,6 +37,28 @@ public class ArticleController extends AbstractController{
         //
 
         return null;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryNewsById", method = RequestMethod.GET)
+    public ResultObject queryNewsById(@RequestParam("id") String id){
+        return null;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/queryArticleBySmallCatalog", method = RequestMethod.GET)
+    public ResultObject queryArticleBySmallCatalog(
+            @RequestParam("smallCatalog") String smallCatalog,
+            @RequestParam("currentPage") int currentPage,
+            @RequestParam("pageSize") int pageSize){
+        //
+        return this.pageDecorator(articleService.queryArticleBySmallCatalog(smallCatalog,currentPage,pageSize));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/addArticle", method = RequestMethod.POST)
+    public ResultObject addArticle(Article article) {
+        return this.success(articleService.addArticle(article));
     }
 
 }

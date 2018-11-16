@@ -1,6 +1,13 @@
 package com.huayun.common;
 
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public abstract class AbstractController {
 
     final static ResultObject SUCCESS;
@@ -19,6 +26,22 @@ public abstract class AbstractController {
 
         PARAM_ERROR = new ResultObject();
         PARAM_ERROR.setState(MessageCode.PARAM_ERROR);
+    }
+
+    public ResultObject pageDecorator(Page page){
+        Map map = new HashMap();
+
+        List list = page.getContent();
+        Pageable pageable = page.getPageable();
+        map.put("list",list);
+
+        Map mapPage = new HashMap();
+        mapPage.put("total",page.getTotalElements());
+        mapPage.put("pageSize",page.getPageable().getPageSize());
+        mapPage.put("current",page.getPageable().getPageNumber()+1);
+
+        map.put("pagination",mapPage);
+       return  this.success(map);
     }
 
     public ResultObject success(Object data) {

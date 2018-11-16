@@ -1,20 +1,13 @@
 package com.huayun.article.domain;
 
-//import org.jboss.logging.Field;
-//import org.springframework.data.mongodb.core.mapping.Document;
-
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.DateTimeException;
-import java.util.Date;
 
 @Entity
 @Table(name = "Article")
 public class Article implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
     //标题
@@ -33,6 +26,10 @@ public class Article implements Serializable {
     //编辑；
     @Column(length = 500)
     private String editor;
+
+    //发布时间；
+    @Column(length = 500)
+    private String publishDate;
 
     //修改时间；
     @Column(length = 500)
@@ -96,5 +93,13 @@ public class Article implements Serializable {
 
     public void setSmallCatalog(String smallCatalog) {
         this.smallCatalog = smallCatalog;
+    }
+
+    public String getPublishDate() {
+        return publishDate;
+    }
+
+    public void setPublishDate(String publishDate) {
+        this.publishDate = publishDate;
     }
 }
