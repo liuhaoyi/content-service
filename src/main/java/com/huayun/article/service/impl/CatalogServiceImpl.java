@@ -6,6 +6,7 @@ import com.huayun.article.dao.SmallCatalogDao;
 import com.huayun.article.service.ArticleService;
 import com.huayun.article.service.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,12 +23,16 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     public List queryBigCatalog() {
-        List _list =  bigCatalogDao.findAll();
+        Sort sort = new Sort(Sort.Direction.ASC, "seq");
+
+        List _list =  bigCatalogDao.findAll(sort);
         return _list;
     }
 
     @Override
     public List querySmallCatalog(String bigCatalog) {
-        return smallCatalogDao.querySmallCatalogsByBigCatalogId(bigCatalog);
+//        return smallCatalogDao.querySmallCatalogsByBigCatalogIdBOrderBySeqAsc(bigCatalog);
+
+        return smallCatalogDao.querySmallCatalogsByBigCatalogIdOrderBySeqAsc(bigCatalog);
     }
 }

@@ -10,6 +10,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
+import static javafx.scene.input.KeyCode.T;
+
 
 @Service
 public class ArticleServiceImpl  implements ArticleService{
@@ -48,6 +52,11 @@ public class ArticleServiceImpl  implements ArticleService{
     @Override
     public Article addArticle(Article article) {
         return articleDao.save(article);
+    }
+
+    @Override
+    public Article queryArticleById(String id) {
+        return articleDao.findById(id).get();
     }
 
 }

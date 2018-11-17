@@ -32,7 +32,8 @@ dependencies {
 
 //	implementation('org.springframework.boot:spring-boot-starter-data-mongodb')
 //	testImplementation('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
-
+	implementation('org.springframework.boot:spring-boot-devtools')
 	implementation('mysql:mysql-connector-java')
+
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 }

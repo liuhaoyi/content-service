@@ -25,6 +25,9 @@ public class SmallCatalog implements Serializable {
     @Column(length = 500)
     private String img;
 
+    @Column(length = 500)
+    private String link;
+
     @Column(columnDefinition="int")
     private int seq;
 
@@ -70,5 +73,13 @@ public class SmallCatalog implements Serializable {
 
     public void setBigCatalogId(String bigCatalogId) {
         this.bigCatalogId = bigCatalogId;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }

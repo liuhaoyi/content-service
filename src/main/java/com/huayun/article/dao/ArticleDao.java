@@ -12,10 +12,10 @@ import java.util.List;
 
 public interface ArticleDao extends JpaRepository<Article,String> {
 
-    @Query("select art from Article art where art.smallCatalog= :smallCatalog and art.modifyDatetime>:time ")
+    @Query("select art from Article art where art.smallCatalog= :smallCatalog and art.modifyDatetime>:time order by art.modifyDatetime desc ")
     List queryBeforeNewsList(@Param("smallCatalog") String smallCatalog, @Param("time") String time);
 
-    @Query("select art from Article art where art.smallCatalog= :smallCatalog and art.modifyDatetime<:time ")
+    @Query("select art from Article art where art.smallCatalog= :smallCatalog and art.modifyDatetime<:time order by art.modifyDatetime desc ")
     List queryBeforeAfterList(@Param("smallCatalog") String smallCatalog, @Param("time") String time);
 
 

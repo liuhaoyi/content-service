@@ -1,6 +1,9 @@
 package com.huayun.article.domain;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -8,9 +11,12 @@ import java.io.Serializable;
 public class Article implements Serializable {
 
     @Id
+    @GenericGenerator(name="idGenerator", strategy="uuid") //这个是hibernate的注解/生成32位UUID
+    @GeneratedValue(generator="idGenerator")
     private String id;
 
     //标题
+    @NotNull
     @Column(length = 500)
     private String title;
 

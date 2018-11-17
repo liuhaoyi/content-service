@@ -8,5 +8,5 @@ import java.util.List;
 
 
 public interface SmallCatalogDao extends JpaRepository<SmallCatalog,String> {
-    List querySmallCatalogsByBigCatalogId(String bigCatalogId);
+    List querySmallCatalogsByBigCatalogIdOrderBySeqAsc(String bigCatalogId);
 }

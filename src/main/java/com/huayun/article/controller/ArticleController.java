@@ -5,10 +5,12 @@ import com.huayun.article.service.ArticleService;
 import com.huayun.common.AbstractController;
 import com.huayun.common.ResultObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.*;
+import java.util.Date;
 
 @Controller
 @RequestMapping("api")
@@ -30,19 +32,19 @@ public class ArticleController extends AbstractController{
         return null;
     }
 
-    //公用detail表；固定catalog_id='MailPic'
+    //公用detail表；固定catalog_id='shouyedongtu'
     @ResponseBody
     @RequestMapping(value = "/queryMainPicList", method = RequestMethod.GET)
-    public ResultObject queryMainPicList(){
-        //
-
-        return null;
+    public ResultObject queryMainPicList(@RequestParam("smallCatalog") String smallCatalog,
+                                         @RequestParam("currentPage") int currentPage,
+                                        @RequestParam("pageSize") int pageSize){
+        return this.pageDecorator(articleService.queryArticleBySmallCatalog(smallCatalog,currentPage,pageSize));
     }
 
     @ResponseBody
-    @RequestMapping(value = "queryNewsById", method = RequestMethod.GET)
-    public ResultObject queryNewsById(@RequestParam("id") String id){
-        return null;
+    @RequestMapping(value = "queryArticleById", method = RequestMethod.GET)
+    public ResultObject queryArticleById(@RequestParam("id") String id){
+        return this.success(articleService.queryArticleById(id));
     }
 
     @ResponseBody
@@ -58,6 +60,8 @@ public class ArticleController extends AbstractController{
     @ResponseBody
     @RequestMapping(value = "/addArticle", method = RequestMethod.POST)
     public ResultObject addArticle(Article article) {
+        //获取最新事件；
+        article.setModifyDatetime(Long.toString(new Date().getTime()));
         return this.success(articleService.addArticle(article));
     }
 

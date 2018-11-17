@@ -15,4 +15,7 @@ public interface ArticleService {
     Page<Article> queryArticleBySmallCatalog(String smallCatalog, int currentPage, int pageSize);
 
     Article addArticle(Article article);
+
+    Article queryArticleById(String id);
+
 }
