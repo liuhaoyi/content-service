@@ -3,6 +3,7 @@ package com.huayun.article.service;
 
 import com.huayun.article.domain.Article;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -16,6 +17,11 @@ public interface ArticleService {
 
     Article addArticle(Article article);
 
+    Article updateArticle(Article article);
+
     Article queryArticleById(String id);
 
+    Page<Article> queryArticleList(String smallCatalog, String title, String fromDate, String toDate,int currentPage,int pageSize);
+
+    List<Article> search(String title);
 }

@@ -1,26 +1,31 @@
 package com.huayun.user.domain;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "User")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GenericGenerator(name="idGenerator", strategy="uuid") //这个是hibernate的注解/生成32位UUID
+    @GeneratedValue(generator="idGenerator")
     private String id;
 
-    //电话；
-    @Column(length = 100)
-    private String phone;
+    //姓名
+    @Column(length = 200)
+    private String name;
 
     //登录名
     @Column(length = 100)
     private String loginName;
 
-    //密码；
+    //工号；
     @Column(length = 100)
-    private String pwd;
-
+    private String userNo;
+    //电话；
+    @Column(length = 100)
+    private String phone;
     public String getId() {
         return id;
     }
@@ -37,6 +42,14 @@ public class User {
         this.phone = phone;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getLoginName() {
         return loginName;
     }
@@ -45,11 +58,11 @@ public class User {
         this.loginName = loginName;
     }
 
-    public String getPwd() {
-        return pwd;
+    public String getUserNo() {
+        return userNo;
     }
 
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
+    public void setUserNo(String userNo) {
+        this.userNo = userNo;
     }
 }

@@ -28,8 +28,7 @@ public class ArticleController extends AbstractController{
     @ResponseBody
     @RequestMapping(value = "/queryAfterNewsList", method = RequestMethod.GET)
     public ResultObject queryAfterNewsList(@RequestParam("smallCatalog")String smallCatalog,@RequestParam("time") String time){
-
-        return null;
+        return this.success(articleService.queryAfterNewsList(smallCatalog,time));
     }
 
     //公用detail表；固定catalog_id='shouyedongtu'
@@ -44,7 +43,26 @@ public class ArticleController extends AbstractController{
     @ResponseBody
     @RequestMapping(value = "queryArticleById", method = RequestMethod.GET)
     public ResultObject queryArticleById(@RequestParam("id") String id){
+        //每一次查询，阅读次数+1；
         return this.success(articleService.queryArticleById(id));
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/addArticle", method = RequestMethod.POST)
+    public ResultObject addArticle(Article article) {
+        //获取最新事件；
+        article.setModifyDatetime(Long.toString(new Date().getTime()));
+        return this.success(articleService.addArticle(article));
+    }
+
+    //
+    @ResponseBody
+    @RequestMapping(value = "/updateArticle", method = RequestMethod.POST)
+    public ResultObject updateArticle(Article article) {
+        //获取最新事件；
+        article.setModifyDatetime(Long.toString(new Date().getTime()));
+        return this.success(articleService.updateArticle(article));
     }
 
     @ResponseBody
@@ -58,11 +76,30 @@ public class ArticleController extends AbstractController{
     }
 
     @ResponseBody
-    @RequestMapping(value = "/addArticle", method = RequestMethod.POST)
-    public ResultObject addArticle(Article article) {
-        //获取最新事件；
-        article.setModifyDatetime(Long.toString(new Date().getTime()));
-        return this.success(articleService.addArticle(article));
+    @RequestMapping(value = "/queryArticleList", method = RequestMethod.GET)
+    public ResultObject queryArticleList(
+            @RequestParam("smallCatalog") String smallCatalog,
+            @RequestParam("title") String title,
+            @RequestParam("fromDate") String fromDate,
+            @RequestParam("toDate") String toDate,
+            @RequestParam("currentPage") int currentPage,
+            @RequestParam("pageSize") int pageSize){
+
+
+        //设置默认时间；
+        if(null==fromDate || "".equals(fromDate)){
+            fromDate = "1900-00-00";
+        }
+        if(null==toDate || "".equals(toDate)){
+            toDate = "3000-00-00";
+        }
+        return this.pageDecorator(articleService.queryArticleList(smallCatalog,"%" +title+"%",fromDate,toDate,currentPage,pageSize));
     }
 
+    //搜索；
+    @ResponseBody
+    @RequestMapping(value ="/search" , method = RequestMethod.GET)
+    public ResultObject search(@RequestParam("title") String title) {
+        return  this.success(articleService.search("%" + title + "%"));
+    }
 }

@@ -45,6 +45,10 @@ public class Article implements Serializable {
     @Column(length = 500)
     private String smallCatalog;
 
+    //阅读次数；
+    @Column(columnDefinition="long")
+    private long readCount;
+
     public String getId() {
         return id;
     }
@@ -107,5 +111,13 @@ public class Article implements Serializable {
 
     public void setPublishDate(String publishDate) {
         this.publishDate = publishDate;
+    }
+
+    public long getReadCount() {
+        return readCount;
+    }
+
+    public void setReadCount(long readCount) {
+        this.readCount = readCount;
     }
 }
