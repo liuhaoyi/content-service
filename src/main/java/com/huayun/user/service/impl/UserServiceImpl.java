@@ -24,4 +24,11 @@ public class UserServiceImpl implements UserService {
         User _user = userDao.findUserByLoginNameAndPhoneAndUserNo(loginName,phone,userNo);
         return _user;
     }
+
+    @Override
+    public User login(String loginName, String userNo) {
+        return userDao.findUserByLoginNameAndUserNo(loginName,userNo);
+    }
+
+
 }

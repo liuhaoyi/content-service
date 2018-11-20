@@ -8,4 +8,6 @@ public interface UserService {
     List  queryUserList();
 
     User login(String loginName, String phone, String userNo);
+
+    User login(String loginName,String userNo);
 }
