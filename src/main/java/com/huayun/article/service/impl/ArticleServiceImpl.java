@@ -84,4 +84,16 @@ public class ArticleServiceImpl  implements ArticleService{
         return articleDao.findArticlesByTitleLikeOrderByModifyDatetimeDesc(title);
     }
 
+    @Override
+    public boolean remove(String[] ids) {
+        try {
+            for(String id:ids){
+                articleDao.deleteById(id);
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

@@ -4,6 +4,7 @@ import com.huayun.article.domain.Article;
 import com.huayun.article.service.ArticleService;
 import com.huayun.common.AbstractController;
 import com.huayun.common.ResultObject;
+import com.huayun.utils.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.swing.*;
 import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("api")
@@ -18,6 +21,10 @@ public class ArticleController extends AbstractController{
 
     @Autowired
     public ArticleService articleService;
+
+    //读取配置文件中的文件存储路径；
+    @Value("${img.location}")
+    private String location;
 
     @ResponseBody
     @RequestMapping(value = "/queryBeforeNewsList", method = RequestMethod.GET)
@@ -53,6 +60,23 @@ public class ArticleController extends AbstractController{
     public ResultObject addArticle(Article article) {
         //获取最新事件；
         article.setModifyDatetime(Long.toString(new Date().getTime()));
+        //存储图片；
+//        data:image/jpg;base64,/9j/4AAQSkZJRgA
+
+        //获取图片类型；
+        String img = article.getImg();
+
+
+        if(null!=img && img.startsWith("data")){
+            //图片类型
+            String imageType = img.split(";")[0].split("/")[1];
+            String imageName = UUID.randomUUID().toString() + "." + imageType;
+            String saveImagePath = location + "/" + imageName;
+            String images = img.split(",")[1];
+            ImageUtils.base664ToImage(images,saveImagePath);
+            article.setImg("/api/image/" + imageName);
+        }
+
         return this.success(articleService.addArticle(article));
     }
 
@@ -94,6 +118,12 @@ public class ArticleController extends AbstractController{
             toDate = "3000-00-00";
         }
         return this.pageDecorator(articleService.queryArticleList(smallCatalog,"%" +title+"%",fromDate,toDate,currentPage,pageSize));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/removeArticle", method = RequestMethod.POST)
+    public ResultObject remove(@RequestBody String[] ids){
+        return this.success(articleService.remove(ids));
     }
 
     //搜索；

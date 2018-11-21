@@ -14,6 +14,10 @@ public class Menu {
     @GenericGenerator(name="idGenerator", strategy="uuid") //这个是hibernate的注解/生成32位UUID
     @GeneratedValue(generator="idGenerator")
     private String id;
+
+    @Column(length = 500)
+    private String name;
+
     @Column(length = 500)
     private String path;
     @Column(length = 500)
@@ -34,13 +38,20 @@ public class Menu {
 //            "locale": "menu.forums",
 //            "icon": 'usergroup-add',
 
-
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPath() {

@@ -24,4 +24,6 @@ public interface ArticleService {
     Page<Article> queryArticleList(String smallCatalog, String title, String fromDate, String toDate,int currentPage,int pageSize);
 
     List<Article> search(String title);
+
+    boolean remove(String[] ids);
 }

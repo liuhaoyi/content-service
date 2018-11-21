@@ -36,7 +36,6 @@ public class FileController {
             return "1";
         }
 
-
         return "/api/image/"+fileName;
     }
 
