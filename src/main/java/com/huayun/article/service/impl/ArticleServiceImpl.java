@@ -27,7 +27,7 @@ public class ArticleServiceImpl  implements ArticleService{
         if(null==time || "".equals(time)){
             //查询最近10条数据；
 //            return articleDao.queryRecentList(smallCatalog);
-            return articleDao.findTop5BySmallCatalogOrderByModifyDatetimeDesc(smallCatalog);
+            return articleDao.findTop10BySmallCatalogOrderByModifyDatetimeDesc(smallCatalog);
 
         }else{
             //查询当前时间点前的最新10条数据；
@@ -41,12 +41,12 @@ public class ArticleServiceImpl  implements ArticleService{
         if(null==time || "".equals(time)){
             //查询最近10条数据；
 //            return articleDao.queryRecentList(smallCatalog);
-            return articleDao.findTop5BySmallCatalogOrderByModifyDatetimeDesc(smallCatalog);
+            return articleDao.findTop10BySmallCatalogOrderByModifyDatetimeDesc(smallCatalog);
 
         }else{
             //查询当前时间点前的最新10条数据；
 //            return articleDao.queryAfterNewsList(smallCatalog,time);
-            return articleDao.findTop5BySmallCatalogAndModifyDatetimeLessThanOrderByModifyDatetimeDesc(smallCatalog,time);
+            return articleDao.findTop10BySmallCatalogAndModifyDatetimeLessThanOrderByModifyDatetimeDesc(smallCatalog,time);
         }
     }
 

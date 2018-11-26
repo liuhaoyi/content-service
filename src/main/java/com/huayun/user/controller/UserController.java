@@ -1,15 +1,20 @@
 package com.huayun.user.controller;
 
+import com.huayun.article.domain.Article;
 import com.huayun.common.AbstractController;
 import com.huayun.common.ResultObject;
+import com.huayun.user.domain.User;
 import com.huayun.user.service.UserService;
+import com.huayun.utils.ImageUtils;
 import com.sun.javafx.collections.MappingChange;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("api")
@@ -72,5 +77,29 @@ public class UserController  extends AbstractController{
 //    public ResultObject login(@RequestParam("loginName") String loginName,@RequestParam("userNo") String userNo){
 //        return this.success(userService.login(loginName,userNo));
 //    }
+    @ResponseBody
+    @RequestMapping(value = "/user/add", method = RequestMethod.POST)
+    public ResultObject add(User user) {
+
+        return this.success(userService.add(user));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/user/query", method = RequestMethod.GET)
+    public ResultObject query(
+            @RequestParam("name") String name,
+            @RequestParam("phone") String phone,
+            @RequestParam("currentPage") int currentPage,
+            @RequestParam("pageSize") int pageSize){
+
+
+        return this.pageDecorator(userService.query("%" +name+"%","%" +phone+"%",currentPage,pageSize));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/user/remove", method = RequestMethod.POST)
+    public ResultObject remove(@RequestBody String[] ids){
+        return this.success(userService.remove(ids));
+    }
 
 }
