@@ -1,20 +1,15 @@
 package com.huayun.user.controller;
 
-import com.huayun.article.domain.Article;
 import com.huayun.common.AbstractController;
 import com.huayun.common.ResultObject;
+import com.huayun.user.domain.Favor;
 import com.huayun.user.domain.User;
 import com.huayun.user.service.UserService;
-import com.huayun.utils.ImageUtils;
-import com.sun.javafx.collections.MappingChange;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 @RequestMapping("api")
@@ -35,35 +30,29 @@ public class UserController  extends AbstractController{
         return this.success(userService.login(loginName,phone,userNo));
     }
 
-    /**
-     * 管理控制台用户登录；
-     * @param loginName
-     * @param userNo
-     * @return
-     */
-//    @ResponseBody
-//    @RequestMapping(value = "/login/account",method = RequestMethod.POST, produces = "application/json")
-//    public ResultObject reactlogin(@RequestBody String userName,
-//                              @RequestBody String password,
-//                              @RequestBody String type){
-//
-//        return this.success(userService.login(userName,password));
-//    }
-
     @ResponseBody
     @RequestMapping(value = "/login/account",method = RequestMethod.POST, produces = "application/json")
     public Map reactlogin(@RequestBody Map body ){
 
-//        return null;
+        String  password = (String) body.get("password");
+        String userName = (String )body.get("userName");
 
+        User user = userService.login(userName,password);
         Map map = new HashMap();
         map.put("status","ok");
+        map.put("user",user);
         map.put("type","");
         map.put("currentAuthority","admin");
 
         return map;
 //        return this.success(userService.login((String)body.get("userName"),(String)body.get("password")));
     }
+    @ResponseBody
+    @RequestMapping(value = "/user/currentUser",method = RequestMethod.GET)
+    public ResultObject currentUser(@RequestParam("userId") String userId){
+        return this.success(userService.queryUserByid(userId));
+    }
+
 //    {userName: "admin", password: "ant.design", type: "account"
 
 //    /**
@@ -102,4 +91,32 @@ public class UserController  extends AbstractController{
         return this.success(userService.remove(ids));
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/user/addFavor", method = RequestMethod.POST)
+    public ResultObject addFavor(Favor body) {
+        body.setModifyDatetime(Long.toString(new Date().getTime()));
+        return this.success(userService.favor(body));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/user/removeFavor", method = RequestMethod.GET)
+    public ResultObject removeFavor(
+                                    @RequestParam("userId") String userId,
+                                    @RequestParam("articleId") String articleId
+                                    ) {
+        return this.success(userService.removeFavor(userId,articleId));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/user/queryFavorList", method = RequestMethod.GET)
+    public ResultObject queryFavorList(@RequestParam("userId") String userId){
+        return this.success(userService.queryFavorList(userId));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/user/queryFavorByUserIdAndArticleId", method = RequestMethod.GET)
+    public ResultObject queryFavorByUserIdAndArticleId(@RequestParam("userId") String userId,
+                                                 @RequestParam("articleId") String articleId){
+        return this.success(userService.queryFavorByUserIdAndArticleId(userId,articleId));
+    }
 }

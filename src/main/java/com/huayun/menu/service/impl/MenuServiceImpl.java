@@ -16,7 +16,7 @@ public class MenuServiceImpl implements MenuService{
 
     @Override
     public List<Menu> getMenuList() {
-        return menuDao.findAll();
+        return menuDao.findAllByOrderBySeqAsc();
     }
 
 }

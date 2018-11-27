@@ -1,6 +1,7 @@
 package com.huayun.user.service;
 
-import com.huayun.article.domain.Article;
+import com.huayun.user.domain.Article_;
+import com.huayun.user.domain.Favor;
 import com.huayun.user.domain.User;
 import org.springframework.data.domain.Page;
 
@@ -16,5 +17,21 @@ public interface UserService {
 
     Page<User> query(String name, String phone,int currentPage, int pageSize);
 
+    User queryUserByid(String userId);
+
+
     boolean remove(String[] ids);
+
+    Favor favor(Favor favor);
+
+    boolean removeFavor(String userId,String articleId);
+
+    Favor queryFavorByUserIdAndArticleId(String userId,String articleId);
+
+
+    List<Article_> queryFavorList(String userId);
+
+//    List<Pair> queryFavorAfterNewsList(String userId, String time);
+
+
 }

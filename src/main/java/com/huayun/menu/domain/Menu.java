@@ -27,6 +27,9 @@ public class Menu {
 
 //    @OneToMany(cascade= CascadeType.ALL, fetch = FetchType.EAGER, mappedBy="menu")
 
+    //显示顺序；
+    @Column(columnDefinition="int")
+    private int seq;
 
     @OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)//级联保存、更新、删除、刷新;延迟加载
     @JoinColumn(name="menu_id")//在menu_item表增加一个外键列来实现一对多的单向关联
@@ -76,6 +79,14 @@ public class Menu {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    public int getSeq() {
+        return seq;
+    }
+
+    public void setSeq(int seq) {
+        this.seq = seq;
     }
 
     public List<MenuItem> getChildren() {
